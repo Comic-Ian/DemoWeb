@@ -1,0 +1,141 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+
+</head>
+<body>
+    <script type="text/javascript">
+            function add()
+            {
+                var test = {};
+                test.No = $("#No").val();
+                test.Name = $("#Name").val();
+                test.Type = $("#Type").val();
+
+                console.log(test.No+" "+test.Type);
+                if (test.No == null || test.No == 0 ||test.No == "" || test.No == undefined)
+                {
+                    alert("没有输入号码");
+                    return;
+                }
+                if (test.Name == null || test.Name == "" || test.Name == undefined)
+                {
+                    alert("没有输入名字");
+                    return;
+                }
+                if (test.Type == null || test.Type == 0 || test.Type == "" || test.Type == undefined)
+                {
+                    alert("没有输入类别");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Add", "Default")",
+                    data: { t: test, temp: "test" },
+                    success: function (data) {
+                        if (data) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (msg) {
+                    }
+                });
+            }
+            function upd()
+            {
+                var test = {};
+                test.No = $("#No").val();
+                test.Name = $("#Name").val();
+                test.Type = $("#Type").val();
+
+                console.log(test.No + " " + test.Type);
+                if (test.No == null || test.No == 0 || test.No == "" || test.No == undefined) {
+                    alert("没有输入号码");
+                    return;
+                }
+                if (test.Name == null || test.Name == "" || test.Name == undefined) {
+                    alert("没有输入名字");
+                    return;
+                }
+                if (test.Type == null || test.Type == 0 || test.Type == "" || test.Type == undefined) {
+                    alert("没有输入类别");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Upd","Default")",
+                    data: { t: test, temp: "test" },
+                    success: function (data)
+                    {
+                        if (data)
+                        {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (msg) {
+                    }
+                });
+            }
+        function del()
+        {
+            var test = {};
+            test.No = $("#No").val();
+
+            console.log(test.No + " " + test.Type);
+            if (test.No == null || test.No == 0 || test.No == "" || test.No == undefined) {
+                alert("没有输入号码");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Del","Default")",
+                data: { t: test },
+                success: function (data) {
+                    if (data) {
+                        window.location.reload();
+                    }
+                },
+                error: function (msg) {
+                }
+            });
+        }
+    </script>
+    <input type="text" value="" placeholder="请输入号码" id="No" />
+    <input type="text" value="" placeholder="请输入姓名" id="Name" />
+    <input type="text" value="" placeholder="请输入类别" id="Type" />
+
+    
+    <div>
+    <div>
+         <button id="btnsearch" onclick="add()">添加</button>
+         <button id="btnsearch" onclick="upd()">修改</button>
+         <button id="btnsearch" onclick="del()">删除</button>
+    </div>
+        @{
+            if (Model != null && Model.Count > 0)
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    
+                    <div>@(Model[i].No)  @(Model[i].Name)  @(Model[i].Type)</div>
+                                 
+                }
+            }
+
+        }
+    </div>
+</body>
+</html>
